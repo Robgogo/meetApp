@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "746210291707",
+    "firebase_url": "https://dating-app-flutter-video-default-rtdb.firebaseio.com",
+    "project_id": "dating-app-flutter-video",
+    "storage_bucket": "dating-app-flutter-video.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:746210291707:android:61ac0bd14acd83eb92e55e",
+        "android_client_info": {
+          "package_name": "com.example.meet_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "746210291707-r6rn7imk2lh2v3bjqae97kd5lfd07a26.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqtRLj28KuAzjmP4VHQyOD9y62eE4HTSM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "746210291707-r6rn7imk2lh2v3bjqae97kd5lfd07a26.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
