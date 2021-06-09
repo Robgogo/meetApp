@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import './screens/auth_screen.dart';
 import './screens/tabs_screen.dart';
 import './screens/profile/profile_screen.dart';
+import './screens/chatroom/chatroom_detail_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
                 ),
           routes: {
             ProfileScreen.routeName: (ctx) => ProfileScreen(),
+            ChatRoomDetailScreen.routeName: (ctx) => ChatRoomDetailScreen(),
           },
         );
       },

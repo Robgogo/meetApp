@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:intl/intl.dart';
@@ -113,8 +112,10 @@ class _ProfileFormState extends State<ProfileForm> {
             return Center(
               child: CircularProgressIndicator(),
             );
-          if (snapshot.hasData) _profile = snapshot.data;
-          setInitValues(_profile);
+          if (snapshot.hasData && snapshot.data != null) {
+            _profile = snapshot.data;
+            setInitValues(_profile);
+          }
           return Center(
             child: Card(
               margin: EdgeInsets.all(15),

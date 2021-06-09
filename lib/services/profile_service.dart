@@ -13,7 +13,7 @@ class ProfileService {
   FirebaseStorage storage = FirebaseStorage.instance;
   final usersCollection = FirebaseFirestore.instance.collection("users");
 
-  Stream<QuerySnapshot<Map<String, dynamic>>> get StreamObject {
+  Stream<QuerySnapshot<Map<String, dynamic>>> get streamobject {
     return usersCollection.snapshots();
   }
 
@@ -25,8 +25,12 @@ class ProfileService {
     return false;
   }
 
-  Future<Profile> getUserInfo() async {
-    var userData = await usersCollection.doc(user.uid).get();
+  Future<Profile> getUserInfo([String id]) async {
+    var userId = id != null ? id : user.uid;
+    var userData = await usersCollection.doc(userId).get();
+    if (userData.data() == null) {
+      return null;
+    }
     var userProfile = Profile(
         name: userData.data()['name'],
         relationType: userData.data()['relationType'],
