@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../screens/profile/profile.dart';
 import '../../services/profile_service.dart';
+import '../../screens/call/call_screen.dart';
 
 class UsersList extends StatefulWidget {
   const UsersList({
@@ -27,6 +28,7 @@ class _UsersListState extends State<UsersList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      shrinkWrap: true,
       itemCount: widget.document['users'].length,
       itemBuilder: (ctx, i) {
         return FutureBuilder(
@@ -49,6 +51,15 @@ class _UsersListState extends State<UsersList> {
                     backgroundImage: NetworkImage(profile.image),
                     radius: 40,
                   ),
+                  trailing: widget.document['users'][i] != widget.me.uid
+                      ? IconButton(
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushNamed(CallScreen.routeName);
+                          },
+                          icon: Icon(Icons.video_call),
+                        )
+                      : null,
                 ),
                 Divider(),
               ],
