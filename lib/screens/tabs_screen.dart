@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:meet_app/screens/contact/contact_screen.dart';
 
 import '../services/auth_service.dart';
 import './text_chat_screen.dart';
@@ -18,7 +19,7 @@ class _TabsScreenState extends State<TabsScreen> {
       'title': 'Rooms',
     },
     {
-      'page': TextChatScreen(),
+      'page': ContactScreen(),
       'title': 'Chat',
     },
   ];

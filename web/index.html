@@ -40,6 +40,26 @@
       });
     }
   </script>
+   <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+
+   <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-storage.js"></script>
+   <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyBqtRLj28KuAzjmP4VHQyOD9y62eE4HTSM",
+      authDomain: "[YOUR_PROJECT].firebaseapp.com",
+      databaseURL: "https://dating-app-flutter-video-default-rtdb.firebaseio.com/",
+      projectId: "dating-app-flutter-video",
+      storageBucket: "gs://dating-app-flutter-video.appspot.com",
+      messagingSenderId: "...",
+      appId: "1:...:web:...",
+      measurementId: "G-...",
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script> 
   <script src="main.dart.js" type="application/javascript"></script>
 </body>
 </html>

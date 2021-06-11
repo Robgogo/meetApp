@@ -83,7 +83,8 @@ class _ProfileFormState extends State<ProfileForm> {
   }
 
   void setInitValues(Profile profile) {
-    if (!loadedProfile) {
+    print(profile);
+    if (!loadedProfile&& profile!=null) {
       _nameController.text = profile.name;
       _dateBirthController.text = profile.dateOfBirth.toDate().toString();
       _addressController.text = profile.address;
