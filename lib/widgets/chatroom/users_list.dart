@@ -41,6 +41,10 @@ class _UsersListState extends State<UsersList> {
               );
             }
             var profile = snapshot.data;
+            var myProfile;
+            if (profile.uid == widget.me.uid) {
+              myProfile = profile;
+            }
             return Column(
               children: [
                 ListTile(
@@ -51,7 +55,8 @@ class _UsersListState extends State<UsersList> {
                     backgroundImage: NetworkImage(profile.image),
                     radius: 40,
                   ),
-                  trailing: widget.document['users'][i] != widget.me.uid
+                  trailing: (profile.uid != myProfile.uid) &&
+                          (profile.gender != myProfile.gender)
                       ? IconButton(
                           onPressed: () {
                             Navigator.of(context)
