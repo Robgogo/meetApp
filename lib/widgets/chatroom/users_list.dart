@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../screens/profile/profile.dart';
 import '../../services/profile_service.dart';
 import '../../screens/call/call_screen.dart';
+import '../../services/contact_service.dart';
+import '../../screens/contact/contact.dart';
 
 class UsersList extends StatefulWidget {
   const UsersList({
@@ -11,12 +12,14 @@ class UsersList extends StatefulWidget {
     @required this.document,
     @required ProfileService profileService,
     @required this.me,
+    this.likePage = false,
   })  : _profileService = profileService,
         super(key: key);
 
   final document;
   final ProfileService _profileService;
-  final User me;
+  final Profile me;
+  final bool likePage;
 
   @override
   _UsersListState createState() => _UsersListState();
@@ -25,6 +28,7 @@ class UsersList extends StatefulWidget {
 class _UsersListState extends State<UsersList> {
   List<Profile> _profile;
   var _isLoading = true;
+  final _contactService = ContactService();
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -41,34 +45,57 @@ class _UsersListState extends State<UsersList> {
               );
             }
             var profile = snapshot.data;
-            var myProfile;
-            if (profile.uid == widget.me.uid) {
-              myProfile = profile;
-            }
-            return Column(
-              children: [
-                ListTile(
-                  title: widget.document['users'][i] == widget.me.uid
-                      ? Text("Me")
-                      : Text(profile.name),
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(profile.image),
-                    radius: 40,
-                  ),
-                  trailing: (profile.uid != myProfile.uid) &&
-                          (profile.gender != myProfile.gender)
-                      ? IconButton(
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pushNamed(CallScreen.routeName);
-                          },
-                          icon: Icon(Icons.video_call),
-                        )
-                      : null,
-                ),
-                Divider(),
-              ],
-            );
+
+            return (widget.likePage &&
+                    widget.document['users'][i] == widget.me.uid)
+                ? Container()
+                : Column(
+                    children: [
+                      ListTile(
+                        title: widget.document['users'][i] == widget.me.uid
+                            ? Text("Me")
+                            : Text(profile.name),
+                        leading: CircleAvatar(
+                          backgroundImage: NetworkImage(profile.image),
+                          radius: 40,
+                        ),
+                        trailing: widget.document['users'][i] !=
+                                    widget.me.uid &&
+                                (profile.gender != widget.me.gender)
+                            ? IconButton(
+                                onPressed: !widget.likePage
+                                    ? () {
+                                        Navigator.of(context)
+                                            .pushNamed(CallScreen.routeName);
+                                      }
+                                    : () {
+                                        print(profile.toString());
+                                        _contactService.setLikes(
+                                          widget.document['users'][i],
+                                          true,
+                                        );
+                                        _contactService.addContact(
+                                          Contact(
+                                            uid: widget.document['users'][i],
+                                            name: profile.name,
+                                            gender: profile.gender,
+                                            photoUrl: profile.image,
+                                            aboutMe: profile.aboutMe,
+                                            dateOfBirth: profile.dateOfBirth,
+                                          ),
+                                          widget.me,
+                                        );
+                                        // Navigator.of(context).pop();
+                                      },
+                                icon: !widget.likePage
+                                    ? Icon(Icons.video_call)
+                                    : Icon(Icons.favorite_border),
+                              )
+                            : null,
+                      ),
+                      Divider(),
+                    ],
+                  );
           },
         );
       },

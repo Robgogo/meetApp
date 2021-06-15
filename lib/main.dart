@@ -8,6 +8,7 @@ import './screens/profile/profile_screen.dart';
 import './screens/chatroom/chatroom_detail_screen.dart';
 import './screens/call/call_screen.dart';
 import './screens/call/video_call.dart';
+import './screens/contact/match_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
             ChatRoomDetailScreen.routeName: (ctx) => ChatRoomDetailScreen(),
             CallScreen.routeName: (ctx) => CallScreen(),
             JoinChannelVideo.routeName: (ctx) => JoinChannelVideo(),
+            MatchScreen.routeName: (ctx) => MatchScreen(),
           },
         );
       },

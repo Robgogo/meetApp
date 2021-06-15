@@ -6,7 +6,8 @@ import '../../services/profile_service.dart';
 import '../../services/auth_service.dart';
 import '../../widgets/chatroom/users_list.dart';
 import '../../widgets/timer.dart';
-import '../../screens/call/call_screen.dart';
+import '../call/call_screen.dart';
+import '../contact/match_screen.dart';
 
 class ChatRoomDetailScreen extends StatefulWidget {
   static const routeName = '/room';
@@ -65,42 +66,58 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
         if (document['joined'] == document['capacity']) {
           _isFull = true;
         }
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(document['name']),
-            actions: [
-              Row(
-                // crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                      "${document['joined'].toString()}/${document['capacity'].toString()}"),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.face)),
+        return FutureBuilder(
+          future: _profileService.getUserInfo(me.uid),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return Scaffold(
+              appBar: AppBar(
+                title: Text(document['name']),
+                actions: [
+                  Row(
+                    // crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                          "${document['joined'].toString()}/${document['capacity'].toString()}"),
+                      IconButton(onPressed: () {}, icon: Icon(Icons.face)),
+                    ],
+                  ),
                 ],
               ),
-            ],
-          ),
-          body: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              UsersList(
-                  document: document, profileService: _profileService, me: me),
-              TextButton(
-                onPressed: () {},
-                child: _isFull
-                    ? CountDownTimer(
-                        secondsRemaining: _start,
-                        whenTimeExpires: () {
-                          AlertDialog(
-                            title: Text("Choose a person"),
-                            // content: ,
-                          );
-                          // Navigator.of(context).pushNamed(CallScreen.routeName);
-                        },
-                      )
-                    : Text("$_start"),
+              floatingActionButton: FloatingActionButton(
+                child: Icon(Icons.favorite_border),
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushNamed(MatchScreen.routeName, arguments: document);
+                },
               ),
-            ],
-          ),
+              body: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  UsersList(
+                      document: document,
+                      profileService: _profileService,
+                      me: snapshot.data),
+                  TextButton(
+                    onPressed: () {},
+                    child: _isFull
+                        ? CountDownTimer(
+                            secondsRemaining: _start,
+                            whenTimeExpires: () {
+                              Navigator.of(context)
+                                  .pushNamed(CallScreen.routeName);
+                            },
+                          )
+                        : Text("$_start"),
+                  ),
+                ],
+              ),
+            );
+          },
         );
       },
     );
